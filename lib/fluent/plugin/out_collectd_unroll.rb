@@ -7,8 +7,8 @@ module Fluent
 
 
     def emit(tag, es, chain)
-      tag = update_tag(tag)
       es.each { |time, record|
+        tag = update_tag(tag, record)
         Engine.emit(tag, time, normalize_record(record))
       }
 
@@ -16,7 +16,7 @@ module Fluent
     end
 
 
-    def update_tag(tag)
+    def update_tag(tag, record)
       if remove_tag_prefix
         if remove_tag_prefix == tag
           tag = ''
@@ -25,7 +25,7 @@ module Fluent
         end
       end
       if add_tag_prefix
-        tag = tag && tag.length > 0 ? "#{add_tag_prefix}.#{tag}" : add_tag_prefix
+          tag = "#{add_tag_prefix}.#{record['plugin']}.#{record['type']}"
       end
       return tag
     end
@@ -39,15 +39,14 @@ module Fluent
       if !(record.has_key?('values')) || !(record.has_key?('dsnames')) || !(record.has_key?('dstypes')) || !(record.has_key?('host')) || !(record.has_key?('plugin')) || !(record.has_key?('plugin_instance')) || !(record.has_key?('type')) || !(record.has_key?('type_instance'))
         return record
       end
-      
+      rec_plugin = record['plugin']
+      rec_type = record['type']
+      record[rec_plugin] = {rec_type => {}}
+
       record['values'].each_with_index { |value, index|
-        @tags = [record['host'].gsub(".","/"), record['plugin'], record['plugin_instance'], record['type'], record['type_instance'], record['dsnames'][index]]
-        tag = @tags.join(".").squeeze(".").gsub(/\.$/, '')
-        record[tag] = value
-        record[record['dsnames'][index]] = value
-        record['dstype_' + record['dsnames'][index]] = record['dstypes'][index]
-        record['dstype'] = record['dstypes'][index]
+        record[rec_plugin][rec_type][record['dsnames'][index]] = value
       }
+      record['dstypes'] = record['dstypes'][0]
       record.delete('dstypes')
       record.delete('dsnames')
       record.delete('values')
