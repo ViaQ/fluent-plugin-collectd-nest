@@ -39,6 +39,8 @@ module Fluent
       if !(record.has_key?('values')) || !(record.has_key?('dsnames')) || !(record.has_key?('dstypes')) || !(record.has_key?('host')) || !(record.has_key?('plugin')) || !(record.has_key?('plugin_instance')) || !(record.has_key?('type')) || !(record.has_key?('type_instance'))
         return record
       end
+      new_rec = {'collectd': record,
+                 'host': record['host']}
       rec_plugin = record['plugin']
       rec_type = record['type']
       record[rec_plugin] = {rec_type => {}}
@@ -47,10 +49,10 @@ module Fluent
         record[rec_plugin][rec_type][record['dsnames'][index]] = value
       }
       record['dstypes'] = record['dstypes'][0]
-      record.delete('dstypes')
+      record.delete('host')
       record.delete('dsnames')
       record.delete('values')
-      record
+      new_rec
     end
   end
 end
