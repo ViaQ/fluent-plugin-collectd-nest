@@ -1,24 +1,24 @@
 require 'fluent/test'
-require 'fluent/plugin/out_collectd_unroll'
+require 'fluent/plugin/out_collectd_nest'
 
 
-class CollectdUnrollOutputTest < Test::Unit::TestCase
+class CollectdNestOutputTest < Test::Unit::TestCase
   def setup
     Fluent::Test.setup
   end
 
   CONFIG = %[
-    type collectd_unroll
+    type collectd_nest
     tag foo.filtered
   ]
 
   def create_driver(conf = CONFIG)
-    Fluent::Test::OutputTestDriver.new(Fluent::CollectdUnrollOutput, tag='test_tag').configure(conf)
+    Fluent::Test::OutputTestDriver.new(Fluent::CollectdNestOutput, tag='test_tag').configure(conf)
   end
 
   def test_rewrite_tag
     d = create_driver %[
-      type collectd_unroll
+      type collectd_nest
       add_tag_prefix test_tag
     ]
 
@@ -51,7 +51,7 @@ class CollectdUnrollOutputTest < Test::Unit::TestCase
 
   def test_normalize_record
     d = create_driver %[
-      type collectd_unroll
+      type collectd_nest
     ]
 
     d.run do

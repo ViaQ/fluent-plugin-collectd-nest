@@ -1,4 +1,4 @@
-# Output filter plugin to rewrite Collectd JSON output to unroll into a nested json
+# Output filter plugin to rewrite Collectd JSON output to nest into a nested json
 
 Rewrites the message coming from Collectd to store as a nested json. Can be used in Elasticsearch to display metrics.
 
@@ -7,16 +7,16 @@ Rewrites the message coming from Collectd to store as a nested json. Can be used
 Use RubyGems:
 If you use td-agent
 
-    td-agent-gem install fluent-plugin-collectd-unroll
+    td-agent-gem install fluent-plugin-collectd-nest
 
 If you use fluentd
 
-    gem install fluent-plugin-collectd-unroll
+    gem install fluent-plugin-collectd-nest
 
 ## Configuration
 
     <match pattern>
-      type collectd_unroll
+      type collectd_nest
     </match>
 
 If the following record is passed:
@@ -46,7 +46,7 @@ Empty values in "plugin", "plugin_instance", "type" or "type_instance" will not 
 
 <table>
   <tr>
-    <td>Author</td><td>Manoj Sharma <vigyanik@gmail.com></td>
+    <td>Author</td><td> Viaq <TBD></td>
   </tr>
   <tr>
     <td>License</td><td>MIT License</td>

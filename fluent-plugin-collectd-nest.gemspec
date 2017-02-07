@@ -2,13 +2,13 @@
 $:.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name        = "fluent-plugin-collectd-unroll"
-  gem.description = "Output filter plugin to rewrite Collectd JSON output to flat json"
-  gem.homepage    = "https://github.com/CiscoZeus/fluent-plugin-collectd-unroll"
+  gem.name        = "fluent-plugin-collectd-nest"
+  gem.description = "Output filter plugin to rewrite Collectd JSON output to nested json"
+  gem.homepage    = "https://github.com/viaq/fluent-plugin-collectd-nest"
   gem.summary     = gem.description
   gem.version     = File.read("VERSION").strip
-  gem.authors     = ["Manoj Sharma"]
-  gem.email       = "vigyanik@gmail.com"
+  gem.authors     = ["Anton Sherkhonov"]
+  gem.email       = "sherkhonov@gmail.com"
   gem.has_rdoc    = false
   #gem.platform    = Gem::Platform::RUBY
   gem.license     = 'MIT'
