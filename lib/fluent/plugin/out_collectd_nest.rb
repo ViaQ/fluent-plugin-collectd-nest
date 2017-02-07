@@ -1,6 +1,6 @@
 module Fluent
-  class CollectdUnrollOutput < Output
-    Fluent::Plugin.register_output('collectd_unroll', self)
+  class CollectdNestOutput < Output
+    Fluent::Plugin.register_output('collectd_nest', self)
 
     config_param :remove_tag_prefix,  :string, :default => nil
     config_param :add_tag_prefix,     :string, :default => nil
