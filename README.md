@@ -36,6 +36,18 @@ then you get new record:
 
 Empty values in "plugin", "plugin_instance", "type" or "type_instance" will not be copied into the new tag name
 
+If a records has only one value like :
+```js
+[{"time" => 1000, "host" => 'host_v', "interval" => 5, "plugin" => 'plugin_v', "plugin_instance" => 'plugin_instance_v', "type" => 'type_v', "type_instance" => 'type_instance_v', "values" => ['v1'], "dsnames" => ['n1'], "dstypes" => ['t1']}]
+```
+then the new record will be:
+
+```js
+[{"host" => "host_v", "collectd": {"time" => 1000, "interval" => 5,
+"plugin" => "plugin_v", "plugin_instace" => "plugin_instance_v",
+"type" => "type_v", "type_instance" => "type_instance_v", "dstypes" => "t1",
+"plugin_v" => {"type_v" => "v1"}}}]
+```
 
 ## WARNING
 
