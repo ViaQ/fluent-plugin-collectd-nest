@@ -39,18 +39,18 @@ module Fluent
       if !(record.has_key?('values')) || !(record.has_key?('dsnames')) || !(record.has_key?('dstypes')) || !(record.has_key?('host')) || !(record.has_key?('plugin')) || !(record.has_key?('type'))
         return record
       end
-          new_rec = {}
-          new_rec['hostname']= record['host']
-          rec_plugin = record['plugin']
-          rec_type = record['type']
-          record[rec_plugin] = {rec_type => {}}
+      new_rec = {}
+      new_rec['hostname']= record['host']
+      rec_plugin = record['plugin']
+      rec_type = record['type']
+      record[rec_plugin] = {rec_type => {}}
       if record['dsnames'].length == 1
-          record[rec_plugin][rec_type] = record['values']
+        record[rec_plugin][rec_type] = record['values']
       else
-          record['values'].each_with_index { |value, index|
+        record['values'].each_with_index { |value, index|
           record[rec_plugin][rec_type][record['dsnames'][index]] = value
-          }
-          record['dstypes'] = record['dstypes'].uniq
+        }
+        record['dstypes'] = record['dstypes'].uniq
       end
       record.delete('host')
       record.delete('dsnames')
