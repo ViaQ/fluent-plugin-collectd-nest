@@ -44,11 +44,14 @@ module Fluent
       rec_plugin = record['plugin']
       rec_type = record['type']
       record[rec_plugin] = {rec_type => {}}
-
-      record['values'].each_with_index { |value, index|
-        record[rec_plugin][rec_type][record['dsnames'][index]] = value
-      }
-      record['dstypes'] = record['dstypes'].uniq
+      if record['dsnames'].length == 1
+        record[rec_plugin][rec_type] = record['values']
+      else
+        record['values'].each_with_index { |value, index|
+          record[rec_plugin][rec_type][record['dsnames'][index]] = value
+        }
+        record['dstypes'] = record['dstypes'].uniq
+      end
       record.delete('host')
       record.delete('dsnames')
       record.delete('values')
