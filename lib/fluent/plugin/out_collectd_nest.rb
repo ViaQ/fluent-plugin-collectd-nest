@@ -45,7 +45,7 @@ module Fluent
       rec_type = record['type']
       record[rec_plugin] = {rec_type => {}}
       if record['dsnames'].length == 1
-        record[rec_plugin][rec_type] = record['values']
+        record[rec_plugin][rec_type] = record['values'].first
       else
         record['values'].each_with_index { |value, index|
           record[rec_plugin][rec_type][record['dsnames'][index]] = value
